@@ -102,6 +102,19 @@ public class AboutController {
                                                    >https://www.flaticon.com/free-icons/copy</a
                                                  >
                                                </li>
+                                               <li
+                                                 style="
+                                                   padding-left: 10px;
+                                                   border-left: 5px solid transparent;
+                                                   border-color: #9eeeb3;
+                                                   border-radius: 2px;
+                                                 "
+                                               >
+                                                 <p>Kamera Icons erstellt von Freepik - Flaticon:</p>
+                                                 <a href="www.flaticon.com/de/kostenlose-icons/kamera"
+                                                   >www.flaticon.com/de/kostenlose-icons/kamera</a
+                                                 >
+                                               </li>
                                              </ul>
                                          </body>
                                        </html>

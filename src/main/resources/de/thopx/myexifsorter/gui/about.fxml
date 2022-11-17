@@ -8,39 +8,32 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.web.WebView?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0"
-            prefWidth="601.0" stylesheets="@about.css" xmlns="http://javafx.com/javafx/18"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.thopx.myexifsorter.gui.AboutController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="601.0" stylesheets="@about.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.thopx.myexifsorter.gui.AboutController">
    <AnchorPane layoutX="-8.0" layoutY="-75.0" prefHeight="162.0" prefWidth="609.0" styleClass="header">
       <Label layoutX="23.0" layoutY="94.0" text="ExifSorter" textFill="#4c4444">
          <font>
-            <Font name="Agency FB Bold" size="44.0"/>
+            <Font name="Agency FB Bold" size="44.0" />
          </font>
       </Label>
-      <ImageView fitHeight="52.0" fitWidth="57.0" layoutX="185.0" layoutY="95.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <Image url="@icons/exif.png"/>
+      <ImageView fitHeight="52.0" fitWidth="57.0" layoutX="199.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@icons/exif.png" />
       </ImageView>
-      <ImageView fitHeight="54.0" fitWidth="52.0" layoutX="247.0" layoutY="95.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <Image url="@icons/copy-two-paper-sheets-interface-symbol.png"/>
+      <ImageView fitHeight="54.0" fitWidth="52.0" layoutX="251.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@icons/copy-two-paper-sheets-interface-symbol.png" />
       </ImageView>
-      <ImageView id="info-button" fitHeight="54.0" fitWidth="63.0" layoutX="524.0" layoutY="94.0" pickOnBounds="true"
-                 preserveRatio="true">
-         <Image url="@icons/about.png"/>
+      <ImageView id="info-button" fitHeight="54.0" fitWidth="63.0" layoutX="524.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+         <Image url="@icons/about.png" />
       </ImageView>
    </AnchorPane>
    <Text layoutX="21.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="%licence.info">
       <font>
-         <Font name="Agency FB" size="32.0"/>
+         <Font name="Agency FB" size="32.0" />
       </font>
    </Text>
-   <WebView fx:id="webview" focusTraversable="false" layoutX="21.0" layoutY="295.0" prefHeight="200.0"
-            prefWidth="535.0"/>
-   <Label layoutX="21.0" layoutY="87.0" prefHeight="149.0" prefWidth="535.0" text="%label.intro" textFill="#514c4c"
-          wrapText="true">
+   <WebView fx:id="webview" focusTraversable="false" layoutX="21.0" layoutY="295.0" prefHeight="200.0" prefWidth="535.0" />
+   <Label layoutX="21.0" layoutY="87.0" prefHeight="149.0" prefWidth="535.0" text="%label.intro" textFill="#514c4c" wrapText="true">
       <font>
-         <Font size="20.0"/>
+         <Font size="20.0" />
       </font>
    </Label>
 </AnchorPane>

@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +29,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainUiController {
@@ -133,6 +135,7 @@ public class MainUiController {
                 Stage stage = new Stage();
                 stage.setScene( newScene );
                 stage.setResizable( false );
+                stage.getIcons().add(new Image( Objects.requireNonNull( MainUI.class.getResourceAsStream( "icons/kamera.png" ) ) ));
                 stage.show();
 
             } catch ( IOException e ) {
