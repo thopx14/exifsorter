@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="403.0" prefWidth="565.0" style="-fx-background-color: #ebebeb;" styleClass="anchor-pane" stylesheets="@application.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.thopx.myexifsorter.gui.MainUiController">
+    <Label layoutX="32.0" layoutY="95.0" prefHeight="52.0" prefWidth="161.0" text="%label.source" textFill="#514c4c">
+        <font>
+        <Font size="22.0" />
+        </font>
+    </Label>
+    <Label layoutX="35.0" layoutY="181.0" prefHeight="52.0" prefWidth="155.0" text="%label.dest" textFill="#514c4c">
+        <font>
+          <Font size="22.0" />
+        </font>
+    </Label>
+    <TextField fx:id="txtFieldSource" editable="false" layoutX="32.0" layoutY="147.0" prefHeight="2.0" prefWidth="371.0" />
+    <TextField fx:id="txtFieldDest" editable="false" layoutX="32.0" layoutY="233.0" prefHeight="18.0" prefWidth="371.0" />
+    <Button fx:id="btnCopy" disable="true" layoutX="32.0" layoutY="295.0" mnemonicParsing="false" onAction="#btnCopyClicked" prefHeight="52.0" prefWidth="245.0" text="%label.copy" textFill="#514c4c">
+        <font>
+          <Font size="22.0" />
+        </font>
+    </Button>
+    <Button fx:id="btnChooseDest" layoutX="417.0" layoutY="232.0" mnemonicParsing="false" onAction="#btnChooseDestClicked" prefHeight="25.0" prefWidth="77.0" text="%label.choose" textFill="#514c4c" />
+    <Button fx:id="btnChooseSource" layoutX="417.0" layoutY="146.0" mnemonicParsing="false" onAction="#btnChooseSourceClicked" prefHeight="25.0" prefWidth="77.0" text="%label.choose" textFill="#514c4c">
+        <opaqueInsets>
+          <Insets />
+        </opaqueInsets>
+    </Button>
+    <Label fx:id="lblDone" layoutX="283.0" layoutY="300.0" prefHeight="41.0" prefWidth="125.0" text="%label.done" textFill="#6dd06b" visible="false">
+        <font>
+          <Font size="23.0" />
+        </font>
+    </Label>
+    <ProgressBar fx:id="progressBar" layoutX="32.0" layoutY="354.0" prefHeight="18.0" prefWidth="371.0" progress="0.0" styleClass="progressBar" visible="false" />
+    <AnchorPane layoutY="-86.0" prefHeight="162.0" prefWidth="565.0" styleClass="header">
+        <Label layoutX="23.0" layoutY="94.0" text="ExifSorter" textFill="#4c4444">
+            <font>
+                <Font name="Agency FB Bold" size="44.0" />
+            </font>
+        </Label>
+        <ImageView fitHeight="52.0" fitWidth="57.0" layoutX="185.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@icons/exif.png" />
+        </ImageView>
+        <ImageView fitHeight="54.0" fitWidth="52.0" layoutX="247.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+            <Image url="@icons/copy-two-paper-sheets-interface-symbol.png" />
+        </ImageView>
+        <ImageView id="info-button" fitHeight="54.0" fitWidth="63.0" layoutX="478.0" layoutY="94.0" onMouseClicked="#btnInfoClicked" pickOnBounds="true" preserveRatio="true">
+            <Image url="@icons/about.png" />
+        </ImageView>
+    </AnchorPane>
+    <Label fx:id="lblFailed" layoutX="280.0" layoutY="295.0" prefHeight="52.0" prefWidth="245.0" text="%label.failed" textFill="#bc1579" visible="false" wrapText="true">
+        <font>
+          <Font size="23.0" />
+        </font>
+    </Label>
+   <Label fx:id="lblProcessingFile" layoutX="32.0" layoutY="372.0" prefHeight="17.0" prefWidth="481.0" textFill="#514c4c" />
+</AnchorPane>

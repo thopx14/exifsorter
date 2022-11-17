@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+	<!--
+	 This logger will disable all logging for unit tests. See post:
+	 https://stackoverflow.com/questions/24231773/specifying-a-custom-log4j-properties-file-for-all-of-junit-tests-run-from-eclips/24315819#24315819
+	 -->
+	<Appenders>
+		<Console name="Console" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+		</Console>
+	</Appenders>
+	<Loggers>
+		<Root level="OFF">
+			<AppenderRef ref="Console" />
+		</Root>
+	</Loggers>
+</Configuration>

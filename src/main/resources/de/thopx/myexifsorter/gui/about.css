@@ -1,0 +1,18 @@
+.header {
+    -fx-background-color:  #9eeeb3;
+}
+
+.button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #4e514f;
+    -fx-border-width: 1px;
+    -fx-border-radius: 4px;
+}
+
+.button:hover {
+    -fx-background-color: #9eeeb3;
+}
+
+#txt-area {
+    -fx-font-size: 14px;
+}

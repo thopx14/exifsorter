@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This version of pom.xml was inspired by: Konrad Neitzel: https://github.com/kneitzel/JavaFXMavenApp-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.thopx</groupId>
+    <artifactId>myexifsorter</artifactId>
+    <version>0.0.1</version>
+
+    <name>myexifsorter</name>
+
+    <properties>
+        <link.name>${project.artifactId}</link.name>
+        <launcher>${project.artifactId}</launcher>
+        <appName>${project.artifactId}</appName>
+        <main.class>de.thopx.myexifsorter.gui.MainUI</main.class>
+        <main.module>myexifsorter</main.module>
+        <java.version>17</java.version>
+        <required.maven.version>3.8.6</required.maven.version>
+
+        <!-- Dependency versions -->
+        <junit.version>5.9.0</junit.version>
+        <javafx.version>19</javafx.version>
+        <lombok.version>1.18.24</lombok.version>
+        <jetbrains.annotations.version>23.0.0</jetbrains.annotations.version>
+
+        <!-- Plugin dependencies -->
+        <maven.clean.plugin>3.2.0</maven.clean.plugin>
+        <maven.compiler.plugin>3.10.1</maven.compiler.plugin>
+        <maven.dependency.plugin>3.3.0</maven.dependency.plugin>
+        <maven.deploy.plugin>3.0.0</maven.deploy.plugin>
+        <maven.enforcer.plugin>3.1.0</maven.enforcer.plugin>
+        <maven.install.plugin>3.0.1</maven.install.plugin>
+        <maven.jar.plugin>3.2.2</maven.jar.plugin>
+        <maven.resources.plugin>3.3.0</maven.resources.plugin>
+        <maven.site.plugin>4.0.0-M3</maven.site.plugin>
+        <maven.surfire.plugin>3.0.0-M5</maven.surfire.plugin>
+        <moditect.maven.plugin>1.0.0.RC2</moditect.maven.plugin>
+        <jpackage.maven.plugin>0.1.5</jpackage.maven.plugin>
+        <maven.pmd.version>3.18.0</maven.pmd.version>
+        <pmd.version>6.49.0</pmd.version>
+        <codehaus.version.plugin>2.11.0</codehaus.version.plugin>
+        <spotbugs.maven.plugin>4.7.1.1</spotbugs.maven.plugin>
+        <spotbugs.version>4.7.2</spotbugs.version>
+        <metadataExtractor.version>2.18.0</metadataExtractor.version>
+        <log4j.version>2.19.0</log4j.version>
+
+        <!-- other properties -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+
+    </properties>
+
+    <dependencies>
+
+        <!--JUnit-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--JUnit-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--metadata-extractor-->
+        <dependency>
+            <groupId>com.drewnoakes</groupId>
+            <artifactId>metadata-extractor</artifactId>
+            <version>${metadataExtractor.version}</version>
+        </dependency>
+
+        <!--log4j-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <!--log4j-->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+
+        <!--JavaFX: Controls-->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- JavaFX: FXML-->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+        <!-- JavaFX: Web-->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>${javafx.version}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>${maven.enforcer.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>enforce-versions</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <requireMavenVersion>
+                                    <version>${required.maven.version}</version>
+                                </requireMavenVersion>
+                            </rules>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin}</version>
+                <configuration>
+                    <release>${java.version}</release>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>${maven.clean.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>${maven.deploy.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <version>${maven.install.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>${maven.jar.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven.site.plugin}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surfire.plugin}</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>${maven.dependency.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.moditect</groupId>
+                <artifactId>moditect-maven-plugin</artifactId>
+                <version>${moditect.maven.plugin}</version>
+                <executions>
+                    <execution>
+                        <id>add-module-info-to-dependencies</id>
+                        <phase>package</phase>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/modules</outputDirectory>
+                            <overwriteExistingFiles>true</overwriteExistingFiles>
+                            <modules>
+                                <module>
+                                    <artifact>
+                                        <groupId>com.drewnoakes</groupId>
+                                        <artifactId>metadata-extractor</artifactId>
+                                    </artifact>
+                                    <moduleInfo>
+                                        <name>metadata.extractor</name>
+                                    </moduleInfo>
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>com.adobe.xmp</groupId>
+                                        <artifactId>xmpcore</artifactId>
+                                    </artifact>
+                                    <moduleInfo>
+                                        <name>xmpcore</name>
+                                    </moduleInfo>
+                                </module>
+                                <module>
+                                    <artifact>
+                                        <groupId>org.apache.logging.log4j</groupId>
+                                        <artifactId>log4j-core</artifactId>
+                                        <version>${log4j.version}</version>
+                                    </artifact>
+                                    <moduleInfoSource>
+                                        open module org.apache.logging.log4j.core {
+                                        requires java.logging;
+                                        requires java.rmi;
+
+                                        requires transitive java.compiler;
+                                        requires transitive java.desktop;
+                                        requires transitive java.management;
+                                        requires transitive java.naming;
+                                        requires transitive java.scripting;
+                                        requires transitive java.sql;
+                                        requires transitive java.xml;
+
+                                        requires org.apache.logging.log4j;
+
+                                        exports org.apache.logging.log4j.core;
+                                        exports org.apache.logging.log4j.core.appender;
+                                        exports org.apache.logging.log4j.core.appender.db;
+                                        exports org.apache.logging.log4j.core.appender.db.jdbc;
+                                        exports org.apache.logging.log4j.core.appender.mom;
+                                        exports org.apache.logging.log4j.core.appender.mom.jeromq;
+                                        exports org.apache.logging.log4j.core.appender.mom.kafka;
+                                        exports org.apache.logging.log4j.core.appender.nosql;
+                                        exports org.apache.logging.log4j.core.appender.rewrite;
+                                        exports org.apache.logging.log4j.core.appender.rolling;
+                                        exports org.apache.logging.log4j.core.appender.rolling.action;
+                                        exports org.apache.logging.log4j.core.appender.routing;
+                                        exports org.apache.logging.log4j.core.async;
+                                        exports org.apache.logging.log4j.core.config;
+                                        exports org.apache.logging.log4j.core.config.arbiters;
+                                        exports org.apache.logging.log4j.core.config.builder.api;
+                                        exports org.apache.logging.log4j.core.config.builder.impl;
+                                        exports org.apache.logging.log4j.core.config.composite;
+                                        exports org.apache.logging.log4j.core.config.json;
+                                        exports org.apache.logging.log4j.core.config.plugins;
+                                        exports org.apache.logging.log4j.core.config.plugins.convert;
+                                        exports org.apache.logging.log4j.core.config.plugins.processor;
+                                        exports org.apache.logging.log4j.core.config.plugins.util;
+                                        exports org.apache.logging.log4j.core.config.plugins.validation;
+                                        exports org.apache.logging.log4j.core.config.plugins.validation.constraints;
+                                        exports org.apache.logging.log4j.core.config.plugins.validation.validators;
+                                        exports org.apache.logging.log4j.core.config.plugins.visitors;
+                                        exports org.apache.logging.log4j.core.config.properties;
+                                        exports org.apache.logging.log4j.core.config.status;
+                                        exports org.apache.logging.log4j.core.config.xml;
+                                        exports org.apache.logging.log4j.core.config.yaml;
+                                        exports org.apache.logging.log4j.core.filter;
+                                        exports org.apache.logging.log4j.core.filter.mutable;
+                                        exports org.apache.logging.log4j.core.impl;
+                                        exports org.apache.logging.log4j.core.jackson;
+                                        exports org.apache.logging.log4j.core.jmx;
+                                        exports org.apache.logging.log4j.core.layout;
+                                        exports org.apache.logging.log4j.core.layout.internal;
+                                        exports org.apache.logging.log4j.core.lookup;
+                                        exports org.apache.logging.log4j.core.message;
+                                        exports org.apache.logging.log4j.core.net;
+                                        exports org.apache.logging.log4j.core.net.ssl;
+                                        exports org.apache.logging.log4j.core.osgi;
+                                        exports org.apache.logging.log4j.core.parser;
+                                        exports org.apache.logging.log4j.core.pattern;
+                                        exports org.apache.logging.log4j.core.script;
+                                        exports org.apache.logging.log4j.core.selector;
+                                        exports org.apache.logging.log4j.core.time;
+                                        exports org.apache.logging.log4j.core.time.internal;
+                                        exports org.apache.logging.log4j.core.tools;
+                                        exports org.apache.logging.log4j.core.tools.picocli;
+                                        exports org.apache.logging.log4j.core.util;
+                                        exports org.apache.logging.log4j.core.util.datetime;
+                                        exports org.apache.logging.log4j.core.util.internal;
+
+                                        uses org.apache.logging.log4j.core.util.WatchEventService;
+                                        uses org.apache.logging.log4j.core.util.ContextDataProvider;
+
+                                        provides javax.annotation.processing.Processor with
+                                        org.apache.logging.log4j.core.config.plugins.processor.PluginProcessor;
+                                        provides org.apache.logging.log4j.message.ThreadDumpMessage.ThreadInfoFactory with
+                                        org.apache.logging.log4j.core.message.ExtendedThreadInfoFactory;
+                                        provides org.apache.logging.log4j.spi.Provider with
+                                        org.apache.logging.log4j.core.impl.Log4jProvider;
+
+                                        provides org.apache.logging.log4j.core.util.ContextDataProvider with
+                                        org.apache.logging.log4j.core.impl.ThreadContextDataProvider;
+                                        }
+                                    </moduleInfoSource>
+                                </module>
+                            </modules>
+
+                            <module>
+                                <mainClass>${main.class}</mainClass>
+                                <moduleInfoFile>${project.build.sourceDirectory}/module-info.java</moduleInfoFile>
+                            </module>
+
+                            <jdepsExtraArgs>
+                                <arg>--ignore-missing-deps</arg>
+                                <arg>--multi-release</arg>
+                                <arg>${java.version}</arg>
+                            </jdepsExtraArgs>
+                        </configuration>
+                        <goals>
+                            <goal>add-module-info</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>create-runtime-image</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>create-runtime-image</goal>
+                        </goals>
+                        <configuration>
+                            <modulePath>
+                                <path>${project.build.directory}/modules</path>
+                            </modulePath>
+                            <modules>
+                                <module>${main.module}</module>
+                            </modules>
+                            <launcher>
+                                <name>${launcher}</name>
+                                <module>${main.module}</module>
+                            </launcher>
+                            <bindServices>true</bindServices>
+                            <compression>2</compression>
+                            <stripDebug>true</stripDebug>
+                            <outputDirectory>${project.build.directory}/jlink-image</outputDirectory>
+                            <jarInclusionPolicy>APP_WITH_DEPENDENCIES</jarInclusionPolicy>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>com.github.akman</groupId>
+                <artifactId>jpackage-maven-plugin</artifactId>
+                <version>${jpackage.maven.plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jpackage</goal>
+                        </goals>
+                        <configuration>
+                            <name>${appName}</name>
+                            <type>IMAGE</type>
+                            <runtimeimage>${project.build.directory}/jlink-image</runtimeimage>
+                            <module>${main.module}/${main.class}</module>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>${codehaus.version.plugin}</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>display-dependency-updates</goal>
+                            <goal>display-plugin-updates</goal>
+                            <goal>display-property-updates</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>
