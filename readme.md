@@ -22,12 +22,14 @@ or
 \target\jpackage\myexifsorter\myexifsorter.exe
 ```
 
-### Linux / MacOS:
+### MacOS:
 
 ```
 \target\jlink-image\bin\myexifsorter
 ```
-
-I didn't test the build on MacOS or Linux. Maybe it works with `jpackage` - don't know sorry 🤷‍
+or
+```
+\target\jpackage\myexifsorter\myexifsorter.app
+```
 
 For licence info, see: [Licence.md](Licence.md)
