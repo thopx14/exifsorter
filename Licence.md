@@ -9,3 +9,4 @@ https://github.com/drewnoakes/metadata-extractor
 * About icon created by Ilham Fitrotul Hayat - Flaticon: https://www.flaticon.com/free-icons/about
 * Exif icon created by Iconshop - Flaticon: https://www.flaticon.com/free-icons/exif
 * Copy icon created by Catalin Fertu - Flaticon: https://www.flaticon.com/free-icons/copy
+* Kamera Icons erstellt von Freepik - Flaticon: www.flaticon.com/de/kostenlose-icons/kamera

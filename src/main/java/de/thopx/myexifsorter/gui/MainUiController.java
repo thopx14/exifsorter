@@ -36,12 +36,6 @@ public class MainUiController {
 
     // FXML
     @FXML
-    private Button btnChooseDest;
-
-    @FXML
-    private Button btnChooseSource;
-
-    @FXML
     private Button btnCopy;
 
     @FXML
@@ -66,6 +60,10 @@ public class MainUiController {
     // Private class for handling copy service
     private final CopyService copyService;
 
+    private final String unkownDateFolder = ResourceBundle.getBundle( "texts" ).getString( "folder.name.not.found" );
+    private final String parsingText = ResourceBundle.getBundle( "texts" ).getString( "parsing.text" );
+    private final String copyText = ResourceBundle.getBundle( "texts" ).getString( "copy.text" );
+
     // static
     private static final Logger logger = LogManager.getLogger();
 
@@ -77,7 +75,10 @@ public class MainUiController {
         sourceDir = "";
         destDir = "";
         copyService = new CopyService( new DateParser() );
+    }
 
+    public void initialize() {
+        progressBar.progressProperty().bind( copyService.progressProperty());
     }
 
     public void btnChooseSourceClicked() {
@@ -114,6 +115,8 @@ public class MainUiController {
     public void btnCopyClicked() {
         lblDone.setVisible( false );
         lblFailed.setVisible( false );
+        lblProcessingFile.setVisible( true );
+        lblProcessingFile.setText( parsingText + " " + MainUiController.this.sourceDir + " . . ." );
             if ( !copyService.isRunning() ) {
                 progressBar.setVisible( true );
                 copyService.restart();
@@ -162,6 +165,19 @@ public class MainUiController {
         return this.copyService.isRunning();
     }
 
+    private void resetUiAfterCopying(boolean wasAllOkay) {
+        btnCopy.setDisable( false );
+        progressBar.setVisible( false );
+        if(wasAllOkay) {
+            lblDone.setVisible( true );
+        } else {
+            lblFailed.setVisible( true );
+            logger.error( "Failing to copy, please check the logs!" );
+        }
+        lblProcessingFile.setText( "" );
+        lblProcessingFile.setVisible( false );
+    }
+
     private class CopyService extends Service<Void> {
         private final Parser<Path, LocalDate> parser;
 
@@ -172,11 +188,9 @@ public class MainUiController {
         @Override protected Task<Void> createTask() {
             return new Task<>() {
                 @Override protected Void call() throws Exception {
-                    progressBar.setVisible( true );
-                    progressBar.setProgress( 0.1 );
-                    lblProcessingFile.setVisible( true );
                     Map<Path, LocalDate> dateMap = parser.parse( Path.of( sourceDir ) );
-                    float progressStep = (float) 1 / dateMap.entrySet().size();
+                    int dateMapSize = dateMap.size();
+                    int cnt = 0;
                     /*
                      * Copy everything!
                      */
@@ -184,18 +198,31 @@ public class MainUiController {
 
                         Path sourcePath = entry.getKey();
                         LocalDate val = entry.getValue();
+                        Path whereToCopy;
 
-                        String localMonthName = val.format( DateTimeFormatter.ofPattern( "MMMM" ) );
-                        String year = val.format( DateTimeFormatter.ofPattern( "yyyy" ) );
+                        if( val.isEqual(LocalDate.of( 1970, 1, 1 )) ) {
 
-                        // TODO: What to do with dates equal 1.1.1970??
+                            Path destDir = Path.of( MainUiController.this.destDir ).resolve( Path.of(unkownDateFolder));
+                            if ( Files.notExists( destDir ) ) {
+                                Files.createDirectories( destDir );
+                            }
 
-                        Path destDir = Path.of(MainUiController.this.destDir).resolve( year ).resolve( localMonthName );
-                        if( Files.notExists( destDir )) {
-                            Files.createDirectories( destDir );
+                            whereToCopy = destDir.resolve( sourcePath.getFileName() );
+
+                        } else {
+
+                            String localMonthName = val.format( DateTimeFormatter.ofPattern( "MMMM" ) );
+                            String year = val.format( DateTimeFormatter.ofPattern( "yyyy" ) );
+
+                            Path destDir = Path.of( MainUiController.this.destDir ).resolve( year ).resolve( localMonthName );
+                            if ( Files.notExists( destDir ) ) {
+                                Files.createDirectories( destDir );
+                            }
+
+                            whereToCopy = destDir.resolve( sourcePath.getFileName() );
                         }
-
-                        Path whereToCopy = destDir.resolve( sourcePath.getFileName() );
+                        logger.debug( "Count = {}, dateMapSize = {}", cnt, dateMapSize );
+                        updateProgress( cnt++, dateMapSize );
 
                         try {
                             // We need to create the destination directory first!
@@ -203,7 +230,6 @@ public class MainUiController {
                             Files.copy( sourcePath, whereToCopy, LinkOption.NOFOLLOW_LINKS );
 
                         } catch ( IOException e) {
-                            // TODO: Maybe print something, in case we need to skip!
                             if(e instanceof FileAlreadyExistsException ) {
                                 logger.info( "Skipping {}, because it already exists!", sourcePath );
 
@@ -211,26 +237,20 @@ public class MainUiController {
                                 throw  e;
                             }
                         } finally {
-                            Platform.runLater(() -> {
-                                progressBar.setProgress( progressBar.getProgress() + progressStep );
-                                lblProcessingFile.setText( sourcePath.toString() );
-                            });
+                            Platform.runLater(() ->
+                                lblProcessingFile.setText( copyText + " " + sourcePath )
+                            );
                         }
                     }
                     return null;
                 }
 
                 @Override protected void succeeded() {
-                    lblDone.setVisible( true );
-                    btnCopy.setDisable( false );
-                    progressBar.setProgress( 0.0 );
-                    progressBar.setVisible( false );
-                    lblProcessingFile.setVisible( false );
+                    resetUiAfterCopying(true);
                 }
 
                 @Override protected void failed() {
-                    logger.error( "Failing to copy everything!" );
-                    lblFailed.setVisible( true );
+                    resetUiAfterCopying(false);
                     super.failed();
                 }
             };

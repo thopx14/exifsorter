@@ -5,12 +5,15 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.util.Objects;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 
@@ -18,6 +21,7 @@ public class MainUI extends Application {
 
     private static final Logger logger = LogManager.getLogger();
     public static Stage primaryStage = null;
+    private final String alertText = ResourceBundle.getBundle( "texts" ).getString( "confirm.text.quit" );
 
     @Override public void start( Stage stage ) throws Exception {
         logger.debug("loading : mainui.fxml");
@@ -36,6 +40,13 @@ public class MainUI extends Application {
             MainUiController controller = fxmlLoader.getController();
             if(controller.isCopyServiceRunning()) {
                 event.consume();
+                Alert alert = new Alert( Alert.AlertType.CONFIRMATION );
+                alert.setContentText( alertText );
+                alert.initOwner( primaryStage );
+                Optional<ButtonType> buttonType = alert.showAndWait();
+                if(buttonType.isPresent() && buttonType.get().getButtonData() == ButtonBar.ButtonData.OK_DONE) {
+                    Platform.exit();
+                }
             }
             else {
                 Platform.exit();
