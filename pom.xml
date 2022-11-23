@@ -7,7 +7,7 @@
 
     <groupId>de.thopx</groupId>
     <artifactId>myexifsorter</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
 
     <name>myexifsorter</name>
 
@@ -399,6 +399,7 @@
                             <type>IMAGE</type>
                             <runtimeimage>${project.build.directory}/jlink-image</runtimeimage>
                             <module>${main.module}/${main.class}</module>
+                            <icon>${project.build.directory}/classes/de/thopx/myexifsorter/gui/icons/kamera.ico</icon>
                         </configuration>
                     </execution>
                 </executions>

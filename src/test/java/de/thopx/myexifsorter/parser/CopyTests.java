@@ -102,8 +102,6 @@ public class CopyTests {
             String localMonthName = val.format( DateTimeFormatter.ofPattern( "MMMM" ) );
             String year = val.format( DateTimeFormatter.ofPattern( "yyyy" ) );
 
-            // TODO: What to do with dates equal 1.1.1970??
-
             Path destDir = dest.resolve( year ).resolve( localMonthName );
             if(Files.notExists( destDir )) {
                 Files.createDirectories( destDir );
